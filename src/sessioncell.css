@@ -1,0 +1,15 @@
+.session-cell {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  width: calc(100% - 2em);
+  padding: 0 1em;
+}
+
+.session-cell .session-title {
+  font-weight: 500;
+}
