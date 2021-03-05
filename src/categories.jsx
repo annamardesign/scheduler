@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Timeline from "./timeline.jsx";
 import axios from "axios";
+import jp from "jsonpath";
 
 const baseApiUrl = "https://api.hacksoft.io/v1/categories/list";
 
@@ -8,34 +9,55 @@ class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      categories: [],
     };
   }
 
   async componentDidMount() {
-    const { result: data } = await axios.get(baseApiUrl);
-    let categoriesList = data["result"];
+    const response = await axios.get(
+      "https://api.hacksoft.io/v1/categories/list/",
+      {
+        responseType: "json",
+      }
+    );
+    let categoriesObj = response.data.results;
+    let categoriesList = jp.nodes(categoriesObj, "$..category");
+    for (let i = 0; i < categoriesList.length; i++) {
+      if (!categoriesList[i].value.sessions_count > 0) {
+        categoriesList.splice(i, 1);
+      }
+    }
     this.setState({
-      data: [
-        {
-          title: categoriesList.title,
-          startDate: new Date(categoriesList.startDate * 1000),
-          endDate: new Date(categoriesList.endDate * 1000),
-        },
-      ],
+      categories: categoriesList.map((item) => {
+        if (item.value.sessions_count > 0) {
+          return {
+            slug: item.value.slug,
+          };
+        }
+      }),
     });
   }
 
+  //   function toArray(obj) {
+  //     const result = [];
+  //     for (const prop in obj) {
+  //         const value = obj[prop];
+  //         if (typeof value === 'object') {
+  //             result.push(toArray(value));
+  //         }
+  //         else {
+  //             result.push(value);
+  //         }
+  //     }
+  //     return result;
+  // }
+
   render() {
-    const { data } = this.state;
+    const { categories } = this.state;
 
     return (
       <React.Fragment>
-        <div className="container">
-          {data.map((category, index) => (
-            <Timeline key={index} index={index} data={data} />
-          ))}
-        </div>
+        <div className="container"></div>
       </React.Fragment>
     );
   }
