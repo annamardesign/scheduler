@@ -1,13 +1,15 @@
-import React from "react";
-import Categories from "./categories.jsx";
+import Categories from "./categories";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <Categories />
-    </div>
+    <Router>
+      <div className="App">
+        <Route path="/categories">
+          <Categories />
+        </Route>
+      </div>
+    </Router>
   );
 }
-
-export default App;

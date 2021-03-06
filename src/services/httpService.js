@@ -1,20 +1,8 @@
 import axios from "axios";
 
-const axiosApiInstance = axios.create();
-
-axiosApiInstance.interceptors.request.use(
-  async (config) => {
-    await TokenStorage.getNewToken();
-    const value = TokenStorage.getToken();
-    config.headers = {
-      Authorization: `Bearer ${value}`,
-    };
-    return config;
-  },
-  (error) => {
-    Promise.reject(error);
-  }
-);
+const axiosApiInstance = axios.create({
+  baseURL: "https://api.hacksoft.io/v1",
+});
 
 export default {
   get: axiosApiInstance.get,
