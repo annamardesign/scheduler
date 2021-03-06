@@ -5,9 +5,10 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: white;
+  color: black;
   width: calc(100% - 2em);
   padding: 0 1em;
+  background-color: aqua;
 }
 
 .session-cell .session-title {

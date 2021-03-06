@@ -1,7 +1,8 @@
 import React from "react";
-import "row.css";
+import SessionCell from "./sessioncell.jsx";
+import "/.column.css";
 
-export default function Row(props) {
+export default function Column(props) {
   const thewidth = {
     width: props.width,
   };
@@ -9,9 +10,8 @@ export default function Row(props) {
   const renderSessionCell = (session, key) => (
     <SessionCell
       key={key}
-      top={session.startMinutes - props.offsetWidth}
+      left={session.startMinutes - props.offsetWidth}
       width={session.length}
-      color={session.color}
       start={session.start}
       end={session.end}
       sessionTitle={session.title}
@@ -19,7 +19,7 @@ export default function Row(props) {
   );
 
   return (
-    <div className="Row" style={thewidth}>
+    <div className="Column" style={thewidth}>
       {props.sessions.map(renderSessionCell)}
     </div>
   );

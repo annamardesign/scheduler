@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import Timeline from "./timeline.jsx";
+import SessionCell from "./sessioncell.jsx";
 import http from "./services/httpService";
 import jp from "jsonpath";
-
-const baseApiUrl = "https://api.hacksoft.io/v1";
 
 class Categories extends Component {
   constructor(props) {
@@ -58,26 +56,16 @@ class Categories extends Component {
     });
   }
 
-  //   function toArray(obj) {
-  //     const result = [];
-  //     for (const prop in obj) {
-  //         const value = obj[prop];
-  //         if (typeof value === 'object') {
-  //             result.push(toArray(value));
-  //         }
-  //         else {
-  //             result.push(value);
-  //         }
-  //     }
-  //     return result;
-  // }
-
   render() {
-    const { categories } = this.state;
+    const { sortedSessions } = this.state;
 
     return (
       <React.Fragment>
-        <div className="container"></div>
+        <div className="container">
+          {sortedSessions.map((session) => (
+            <SessionCell session={session} />
+          ))}
+        </div>
       </React.Fragment>
     );
   }
