@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Timeline from "./timeline.jsx";
-import axios from "axios";
+import http from "./services/httpService";
 import jp from "jsonpath";
 
 const baseApiUrl = "https://api.hacksoft.io/v1";
@@ -9,22 +9,39 @@ class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sessions: [],
+      sortedSessions: [],
     };
   }
 
   async componentDidMount() {
     let sessionPaths = await this.getSessionsPaths();
-    let ab;
+    this.getAllSessions(sessionPaths);
+  }
+
+  getAllSessions(sessionPaths) {
+    let sessionReqArr = [];
+    sessionPaths.forEach((slug) => {
+      if (slug != undefined) {
+        sessionReqArr.push(http.get(slug.path));
+      }
+    });
+
+    Promise.all(sessionReqArr).then((results) => {
+      let sessionsArr = [];
+      results.forEach((r) =>
+        r.data.length > 0 ? sessionsArr.push(r.data) : null
+      );
+      sessionsArr = sessionsArr.flat().sort(function (a, b) {
+        return new Date(a.start) - new Date(b.start);
+      });
+      this.setState({ sortedSessions: sessionsArr });
+    });
   }
 
   async getSessionsPaths() {
-    const response = await axios.get(
-      "https://api.hacksoft.io/v1/categories/list/",
-      {
-        responseType: "json",
-      }
-    );
+    const response = await http.get("/categories/list/", {
+      responseType: "json",
+    });
     let categoriesObj = response.data.results;
     let categoriesList = jp.nodes(categoriesObj, "$..category");
     for (let i = 0; i < categoriesList.length; i++) {
@@ -39,17 +56,7 @@ class Categories extends Component {
         };
       }
     });
-
-    function prepareSessionsReq() {
-      sessionPaths.forEach(cat => {
-        getSessionReq.push
-      })
-
-      })
-    }
   }
-
-
 
   //   function toArray(obj) {
   //     const result = [];
