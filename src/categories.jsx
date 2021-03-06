@@ -3,17 +3,22 @@ import Timeline from "./timeline.jsx";
 import axios from "axios";
 import jp from "jsonpath";
 
-const baseApiUrl = "https://api.hacksoft.io/v1/categories/list";
+const baseApiUrl = "https://api.hacksoft.io/v1";
 
 class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: [],
+      sessions: [],
     };
   }
 
   async componentDidMount() {
+    let sessionPaths = await this.getSessionsPaths();
+    let ab;
+  }
+
+  async getSessionsPaths() {
     const response = await axios.get(
       "https://api.hacksoft.io/v1/categories/list/",
       {
@@ -27,16 +32,24 @@ class Categories extends Component {
         categoriesList.splice(i, 1);
       }
     }
-    this.setState({
-      categories: categoriesList.map((item) => {
-        if (item.value.sessions_count > 0) {
-          return {
-            slug: item.value.slug,
-          };
-        }
-      }),
+    return categoriesList.map((item) => {
+      if (item.value.sessions_count > 0) {
+        return {
+          path: "/categories/" + item.value.slug + "/retrieve",
+        };
+      }
     });
+
+    function prepareSessionsReq() {
+      sessionPaths.forEach(cat => {
+        getSessionReq.push
+      })
+
+      })
+    }
   }
+
+
 
   //   function toArray(obj) {
   //     const result = [];
