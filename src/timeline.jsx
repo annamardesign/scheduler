@@ -1,15 +1,47 @@
-import React from "react";
+import React, { Component } from "react";
+import getHours from "./utils/time.js";
 
-function Timeline(props) {
-  const { data } = props;
-  if (data.length > 0) {
-    return data.map((category, index) => {
-      <div className="category" key={category.title}>
-        {category.title}
-      </div>;
+class Timeline extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  renderTableHeader() {
+    const hours = getHours();
+    return hours.map((hour) => {
+      return <th key={hour}>{hour.toUpperCase()}</th>;
     });
-  } else {
-    return <h3>No categories yet</h3>;
+  }
+
+  // renderTableData() {
+  //   return (
+  //     <tr key={hour}>
+  //       <td></td>
+  //     </tr>
+  //   );
+  // }
+
+  // getSessions (sessions, areas) {
+  //   return areas.map(area => {
+  //     return sessions.filter(s => {
+  //       return s.area === area.Id})
+
+  //     }).map(a => {
+  //       return fixTime(a, this.multiplier)
+  //     })
+  //   })
+  // }
+  render() {
+    return (
+      <React.Fragment>
+        <table>
+          <tbody>
+            <tr>{this.renderTableHeader()}</tr>
+            {/* {this.renderTableData()} */}
+          </tbody>
+        </table>
+      </React.Fragment>
+    );
   }
 }
 

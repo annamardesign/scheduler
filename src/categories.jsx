@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SessionCell from "./sessioncell.jsx";
+import Timeline from "./timeline.jsx";
 import http from "./services/httpService";
 import jp from "jsonpath";
 
@@ -62,6 +63,7 @@ class Categories extends Component {
     return (
       <React.Fragment>
         <div className="container">
+          <Timeline />
           {sortedSessions.map((session) => (
             <SessionCell session={session} />
           ))}

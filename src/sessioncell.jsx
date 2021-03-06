@@ -5,6 +5,8 @@ export default function SessionCell(props) {
   const thewidth = {
     left: props.left,
     width: props.width,
+    time: props.time,
+    key: props.key,
   };
 
   return (

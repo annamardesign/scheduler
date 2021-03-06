@@ -19,7 +19,7 @@ export default function Column(props) {
   );
 
   return (
-    <div className="Column" style={thewidth}>
+    <div className="column" style={thewidth}>
       {props.sessions.map(renderSessionCell)}
     </div>
   );
