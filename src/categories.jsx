@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SessionCell from "./sessioncell.jsx";
-import Timeline from "./timeline.jsx";
+import getHours from "./utils/time.js";
 import http from "./services/httpService";
 import jp from "jsonpath";
 
@@ -57,16 +57,31 @@ class Categories extends Component {
     });
   }
 
+  renderTableHeader() {
+    const hours = getHours();
+    return hours.map((hour) => {
+      return <th key={hour}>{hour.toUpperCase()}</th>;
+    });
+  }
+
   render() {
     const { sortedSessions } = this.state;
 
     return (
       <React.Fragment>
         <div className="container">
-          <Timeline />
-          {sortedSessions.map((session) => (
-            <SessionCell session={session} />
-          ))}
+          <table>
+            <tbody>
+              <tr>{this.renderTableHeader()}</tr>
+              {sortedSessions.map((session) => (
+                <SessionCell
+                  session={session}
+                  width={(session.end - session.start) / 30}
+                  key={new Date(session.start).getTime()}
+                />
+              ))}
+            </tbody>
+          </table>
         </div>
       </React.Fragment>
     );

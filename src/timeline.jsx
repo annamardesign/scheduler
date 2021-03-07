@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { Component } from "react";
 import getHours from "./utils/time.js";
 
@@ -13,6 +14,7 @@ class Timeline extends Component {
     });
   }
 
+  getCurrentMomentObject;
   // renderTableData() {
   //   return (
   //     <tr key={hour}>
