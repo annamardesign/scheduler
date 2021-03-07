@@ -3,6 +3,7 @@ import SessionCell from "./sessioncell.jsx";
 import getHours from "./utils/time.js";
 import http from "./services/httpService";
 import jp from "jsonpath";
+import Calendar from "./calendar";
 
 class Categories extends Component {
   constructor(props) {
@@ -66,25 +67,17 @@ class Categories extends Component {
 
   render() {
     const { sortedSessions } = this.state;
-
-    return (
-      <React.Fragment>
-        <div className="container">
-          <table>
-            <tbody>
-              <tr>{this.renderTableHeader()}</tr>
-              {sortedSessions.map((session) => (
-                <SessionCell
-                  session={session}
-                  width={(session.end - session.start) / 30}
-                  key={new Date(session.start).getTime()}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </React.Fragment>
-    );
+    if (sortedSessions.length == 0) {
+      return <p>Loading</p>;
+    } else {
+      return (
+        <React.Fragment>
+          <div className="container">
+            <Calendar sessions={sortedSessions} />
+          </div>
+        </React.Fragment>
+      );
+    }
   }
 }
 
