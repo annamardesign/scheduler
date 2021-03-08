@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import SessionCell from "./sessioncell.jsx";
-import getHours from "./utils/time.js";
 import http from "./services/httpService";
 import jp from "jsonpath";
 import Calendar from "./calendar";
@@ -55,13 +53,6 @@ class Categories extends Component {
           path: "/categories/" + item.value.slug + "/retrieve",
         };
       }
-    });
-  }
-
-  renderTableHeader() {
-    const hours = getHours();
-    return hours.map((hour) => {
-      return <th key={hour}>{hour.toUpperCase()}</th>;
     });
   }
 
