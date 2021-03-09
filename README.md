@@ -12,6 +12,8 @@
 HackSoft Frontend Engineer Task
 08.03.2021
 
+Basic Timetable component implementation fetching data from API, the interface could be improved further 
+
 ## Technologies
 
 React 17.0.1,
@@ -22,7 +24,7 @@ React-calendar-timeline API 0.27.0
 
 In the project directory, you can run:
 ### `npm start`
-Runs the app in the development mode.\
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Interaction
