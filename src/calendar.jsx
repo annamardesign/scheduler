@@ -1,11 +1,12 @@
 import React from "react";
 import Timeline from "react-calendar-timeline";
-// make sure you include the timeline stylesheet or the timeline will not be styled
+import containerResizeDetector from "react-calendar-timeline/lib/resize-detector/container";
 import "react-calendar-timeline/lib/Timeline.css";
-import moment from "moment";
 
 const Calendar = (props) => {
   const groups = [{ id: 1, title: "Sessions" }];
+  const minZoom = 14400000;
+  const maxZoom = 28800000;
   const steps = {
     second: 0,
     minute: 30,
@@ -14,29 +15,6 @@ const Calendar = (props) => {
     month: 0,
     year: 0,
   };
-  const items1 = [
-    {
-      id: 1,
-      group: 1,
-      title: "item 1",
-      start_time: 1615125600000,
-      end_time: 1615127400000,
-    },
-    {
-      id: 2,
-      group: 1,
-      title: "item 2",
-      start_time: 1615127400000,
-      end_time: 1615131000000,
-    },
-    {
-      id: 3,
-      group: 1,
-      title: "item 3",
-      start_time: 1615127400000,
-      end_time: 1615129200000,
-    },
-  ];
 
   const items = [];
   props.sessions.forEach((s) => {
@@ -45,8 +23,11 @@ const Calendar = (props) => {
     s.group = 1;
     items.push(s);
   });
-  const timelineStart = Date.parse(props.sessions[0].start);
-  const timelineEnd = Date.parse(props.sessions[props.sessions.length - 1].end);
+
+  const timelineStart = new Date(props.sessions[0].start);
+  const timelineEnd = new Date(props.sessions[props.sessions.length - 1].end);
+  const canvasStart = Date.parse(props.sessions[0].start);
+  const canvasEnd = Date.parse(props.sessions[props.sessions.length - 1].end);
 
   return (
     <div>
@@ -55,10 +36,14 @@ const Calendar = (props) => {
         items={items}
         defaultTimeStart={timelineStart}
         defaultTimeEnd={timelineEnd}
+        canvasTimeStart={canvasStart}
+        canvasTimeEnd={canvasEnd}
         timeSteps={steps}
         stackItems={true}
-        maxZoom={3600000}
+        minZoom={minZoom}
+        maxZoom={maxZoom}
         traditionalZoom={true}
+        resizeDetector={containerResizeDetector}
       />
     </div>
   );

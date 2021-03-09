@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import http from "./services/httpService";
 import jp from "jsonpath";
 import Calendar from "./calendar";
+import "./scheduler.css";
 
-class Categories extends Component {
+class Scheduler extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +20,7 @@ class Categories extends Component {
   getAllSessions(sessionPaths) {
     let sessionReqArr = [];
     sessionPaths.forEach((slug) => {
-      if (slug != undefined) {
+      if (slug !== undefined) {
         sessionReqArr.push(http.get(slug.path));
       }
     });
@@ -58,7 +59,7 @@ class Categories extends Component {
 
   render() {
     const { sortedSessions } = this.state;
-    if (sortedSessions.length == 0) {
+    if (sortedSessions.length === 0) {
       return <p>Loading</p>;
     } else {
       return (
@@ -72,4 +73,4 @@ class Categories extends Component {
   }
 }
 
-export default Categories;
+export default Scheduler;

@@ -1,4 +1,4 @@
-import Categories from "./categories.jsx";
+import Scheduler from "./scheduler.jsx";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
@@ -7,7 +7,7 @@ export default function App() {
     <Router>
       <div className="App">
         <Route path="/">
-          <Categories />
+          <Scheduler />
         </Route>
       </div>
     </Router>
